@@ -14,3 +14,31 @@
 // 4. Event listeners should also display the next question. 
 // 5. Event listeners should also display whether the answer was right or wrong.
 
+function startQuiz() {
+    startTimer();
+    showQuestions();
+};
+
+var timeEl = document.querySelector("#timeLeft");
+var startBtn = document.querySelector('#beginBtn');
+
+var timeLeft = 300;
+
+function noTimeLeft() {
+    timeEl.textContent = "You Lost, haha";
+}
+
+function startTimer() {
+    var timerInterval = setInterval(function() {
+        timeLeft--;
+        timeEl.textContent = timeLeft + ' until the end of the quiz.';
+
+        if (timeLeft === 0) {
+            clearInterval(timerInterval);
+            noTimeLeft();
+        }
+
+    }, 1000);
+};
+
+startBtn.addEventListener('click', startTimer);
