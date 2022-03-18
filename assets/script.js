@@ -21,8 +21,9 @@ function startQuiz() {
 
 var timeEl = document.querySelector("#timeLeft");
 var startBtn = document.querySelector('#beginBtn');
-
 var timeLeft = 300;
+var questionsEl = document.querySelectorAll(".quiz");
+
 
 function noTimeLeft() {
     timeEl.textContent = "You Lost, haha";
@@ -42,3 +43,12 @@ function startTimer() {
 };
 
 startBtn.addEventListener('click', startTimer);
+
+
+    questionsEl.addEventListener('click', function() {
+    var element = event.target;
+    if (element.matches(".wrongAnswer")) {
+        //What happens when the user clicks on a wrong answer
+        questionsEl.setAttribute('style', 'border: 5px solid red')
+    };
+});
