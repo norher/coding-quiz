@@ -21,13 +21,12 @@ function startQuiz() {
 
 var timeEl = document.getElementById("timeLeft");
 var mainContainer = document.getElementById('mainContainer');
-var timeLeft = 300;
-var questionsEl = document.querySelectorAll(".quiz");
+var timeLeft;
 var gameOn = false; 
 let score = 0;
 let questionChoice;
 
-var questions = [
+var questionsList = [
     ["What does HTML stand for?"],
     ["What does HTML do?"],
     ["Choose an element that is NOT semantics HTML"],
@@ -67,7 +66,8 @@ function init() {
 function startGame() {
     gameOn = true;
     currentScore = 0;
-    timeLeft = 60
+    timeLeft = 60;
+    questionChoice = 0;
     timeEl.textContent = "Time: " + timeLeft;
     startTimer();
     getNewQuestion(); 
@@ -88,6 +88,20 @@ function startTimer() {
         }
     }, 1000);
 };
+
+function getNewQuestion () {
+    var whichQuestion = questionsList[num][0];
+    var correctChoice = questionsList[num][1];
+    var answerList = answerChoices[num];
+    var questionEl = document.createElement("h1");
+    var possibleAnswers = document.createElement("ul");
+
+    questionEl.textContent = whichQuestion;
+    mainContainer.append = questionEl;
+
+    
+
+}
 
 function gameMode() {
     if (questionChoice < questions.length) {
