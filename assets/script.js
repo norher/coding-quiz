@@ -20,10 +20,60 @@ function startQuiz() {
 };
 
 var timeEl = document.querySelector("#timeLeft");
-var startBtn = document.querySelector('#beginBtn');
+var mainContainer = document.getElementById('mainContainer');
 var timeLeft = 300;
 var questionsEl = document.querySelectorAll(".quiz");
+var rightAnswerEl = document.querySelectorAll(".rightAnswer")
+var wrongAnswerEl = document.querySelectorAll(".wrongAnswer")
+var gameOn = false; 
+let score = 0
+let QuestionCounter = 0
 
+var questions = [
+    ["What does HTML stand for?"],
+    ["What does HTML do?"],
+    ["Choose an element that is NOT semantics HTML"],
+    ["What does CSS stand for?"],
+    ["What does CSS do?"],
+    ["What is JavaScript?"],
+    [" What is a function in JavaScript?"],
+    ["What is the command in gitbash to create a new directory?"],
+    ["What is the command in gitbash to create a new file?"]
+]
+
+var answerChoices = [
+    ["Honey, Tea, Mango, Lime", "Hyper Text Markup Language", "Head To My Limo", "How To Make Labels"]
+    ["Gives you step by step instruction on how to make a lemonade", "It tells the browser how to display content", "When added to your social media, it gives you more likes.", "It prints labels" ],
+    ["'main' element", "'span' element", "'footer' element", "'nav' element"],
+    ["Camaro Super Sport", "Cascading Style Sheets", "Cool Spies Spying", "Cream, Soup, Salad"],
+    ["It runs complicated algorithms to complete math in a calculator", "It describes how HTML elemtns are displayed", "It's a new diet to lose weight", "It shows you a new way to do spying"],
+    ["It's an app to custom order a coffee", "It's a programming language of the web, one of the most popular", "It's a script for a movie about coffee", "It's a language you have to learn in order to speak computer"],
+    ["It's a show that you have to watch in order to learn JavaScript", "It's a block of code designed to perform a particular task", "It's a way to trick your body into functioning a certain way", "It is a comment that explains something but doesn't get executed"],
+    ["newfolder", "mkdir", "newdirectory", "pull"],
+    ["newfile", "touch", "mkfile", "push"]
+]
+
+init();
+
+function init() {
+    var startEl = document.createElement("h1");
+    startEl.textContent = "Click button to start quiz.";
+    var startBtn = document.createElement("button");
+    startBtn.textContent = "Start!";
+    startBtn.addEventListener("click", startGame);
+    startBtn.classList.add("start-btn");
+    mainContainer.append(startEl);
+    mainContainer.append(startBtn);
+}
+
+function startGame() {
+    gameOn = true;
+    currentScore = 0;
+    timeLeft = 60
+    timeEl.textContent = "Time: " + timeLeft;
+    startTimer();
+    nextQuestion(); 
+}
 
 function noTimeLeft() {
     timeEl.textContent = "You Lost, haha";
@@ -32,13 +82,12 @@ function noTimeLeft() {
 function startTimer() {
     var timerInterval = setInterval(function() {
         timeLeft--;
-        timeEl.textContent = timeLeft + ' until the end of the quiz.';
+        timeEl.textContent = timeLeft + ' seconds until the end of the quiz.';
 
-        if (timeLeft === 0) {
+        if (timeLeft === 0 || gameOn === false) {
             clearInterval(timerInterval);
             noTimeLeft();
         }
-
     }, 1000);
 };
 
