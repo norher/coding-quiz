@@ -19,15 +19,13 @@ function startQuiz() {
     showQuestions();
 };
 
-var timeEl = document.querySelector("#timeLeft");
+var timeEl = document.getElementById("timeLeft");
 var mainContainer = document.getElementById('mainContainer');
 var timeLeft = 300;
 var questionsEl = document.querySelectorAll(".quiz");
-var rightAnswerEl = document.querySelectorAll(".rightAnswer")
-var wrongAnswerEl = document.querySelectorAll(".wrongAnswer")
 var gameOn = false; 
-let score = 0
-let QuestionCounter = 0
+let score = 0;
+let questionChoice;
 
 var questions = [
     ["What does HTML stand for?"],
@@ -72,7 +70,7 @@ function startGame() {
     timeLeft = 60
     timeEl.textContent = "Time: " + timeLeft;
     startTimer();
-    nextQuestion(); 
+    getNewQuestion(); 
 }
 
 function noTimeLeft() {
@@ -91,13 +89,12 @@ function startTimer() {
     }, 1000);
 };
 
-startBtn.addEventListener('click', startTimer);
-
-
-    questionsEl.addEventListener('click', function() {
-    var element = event.target;
-    if (element.matches(".wrongAnswer")) {
-        //What happens when the user clicks on a wrong answer
-        questionsEl.setAttribute('style', 'border: 5px solid red')
-    };
-});
+function gameMode() {
+    if (questionChoice < questions.length) {
+        mainContainer.innerHTML = "";
+        createQuestion(questionChoice);
+        questionChoice++;
+    } else {
+        gameOver();
+    }
+}
