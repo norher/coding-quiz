@@ -36,7 +36,7 @@ var questionsList = [
     [" What is a function in JavaScript?"],
     ["What is the command in gitbash to create a new directory?"],
     ["What is the command in gitbash to create a new file?"]
-]
+];
 
 var answerChoices = [
     ["Honey, Tea, Mango, Lime", "Hyper Text Markup Language", "Head To My Limo", "How To Make Labels"]
@@ -89,24 +89,39 @@ function startTimer() {
     }, 1000);
 };
 
-function getNewQuestion () {
-    var whichQuestion = questionsList[num][0];
-    var correctChoice = questionsList[num][1];
-    var answerList = answerChoices[num];
+console.log(questionsList);
+
+function getNewQuestion(num) {
+    var whichQuestion = questionsList[0];
+    var correctChoice = questionsList[1];
+    var answerList = answerChoices;
     var questionEl = document.createElement("h1");
     var possibleAnswers = document.createElement("ul");
 
     questionEl.textContent = whichQuestion;
     mainContainer.append = questionEl;
 
-    
-
+    for (i = 0; i < answerList.length; i++) {
+        var answerBtn = document.createElement("button");
+        var answerItem = document.createElement("li");
+        answerBtn.textContent = (i + 1) + ". " + answerChoices[num][i];
+        answerBtn.setAttribute("id", "btn" + i);
+        if (i === correctChoice) {
+            answerBtn.setAttribute('data-correct', "true");
+        } else {
+            answerBtn.setAttribute("data-correct", "false")
+        }
+        answerBtn.addEventListener("click", isCorrect);
+        answerItem.append(answerBtn);
+        possibleAnswers.append(answerItem);
+    }
+    mainContainer.append(possibleAnswers);
 }
 
 function gameMode() {
     if (questionChoice < questions.length) {
         mainContainer.innerHTML = "";
-        createQuestion(questionChoice);
+        getNewQuestion(questionChoice);
         questionChoice++;
     } else {
         gameOver();
