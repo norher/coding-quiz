@@ -9,13 +9,9 @@
 </head>
 <body>
     <main>
-        <div id="mainCard">
+        <div class="mainCard">
             <div id="questionContainer" class="hide">Question</div>
             <div id="answerBtns" class="answersContainer hide">
-                <button class="btn">Answer 1</button>
-                <button class="btn">Answer 2</button>
-                <button class="btn">Answer 3</button>
-                <button class="btn">Answer 4</button>
             </div>
             <div class="controls">
                 <button id="startBtn" class="startBtn btn">Start</button>
@@ -26,8 +22,10 @@
         <div id="greeting">
             <h1>Click Start to test your coding knowledge</h1>
         </div>
-        <div id="timer" class="hide">
-
+        <div id="timer" class="hide darkCard mainCard">
+        </div>
+        <div id="scorer" class=" hide darkCard mainCard">
+            <h1>Current Score</h1>
         </div>
         <script src="./assets/script.js"></script>
     </main>

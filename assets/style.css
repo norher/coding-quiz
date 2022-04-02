@@ -42,7 +42,7 @@ header {
     text-align: center;
 }
 
-#mainCard {
+.mainCard {
     width: 800px;
     max-width: 80%;
     background-color: lightslategray;
@@ -87,6 +87,14 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.darkCard {
+    background-color: black;
+    color: white;
+    justify-content: center;
+    text-align: center;
+    margin-top: 10px;
 }
 
 .hide {

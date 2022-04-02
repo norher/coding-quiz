@@ -14,63 +14,125 @@
 // 4. Event listeners should also display the next question. 
 // 5. Event listeners should also display whether the answer was right or wrong.
 
-function startQuiz() {
-    startTimer();
-    showQuestions();
-};
-
-var timeEl = document.getElementById("timeLeft");
-var mainContainer = document.getElementById('mainContainer');
-var timeLeft;
-var gameOn = false; 
+const startButton = document.getElementById("startBtn");
+const questionContainerEl = document.getElementById("questionContainer");
+const questionEl = document.getElementById("questionContainer");
+const greeterEl = document.getElementById("greeting")
+const answerButtonEl = document.getElementById("answerBtns");
+const nextButton = document.getElementById("nextBtn");
+const resultsButton = document.getElementById("resultsBtn");
+const scoreEl = document.getElementById("scorer")
+var timeEl = document.getElementById("timer");
+var timeLeft = 60;
 let score = 0;
-let questionChoice;
+let shuffledQuestions, currentQuestionIndex
 
-var questionsList = [
-    ["What does HTML stand for?"],
-    ["What does HTML do?"],
-    ["Choose an element that is NOT semantics HTML"],
-    ["What does CSS stand for?"],
-    ["What does CSS do?"],
-    ["What is JavaScript?"],
-    [" What is a function in JavaScript?"],
-    ["What is the command in gitbash to create a new directory?"],
-    ["What is the command in gitbash to create a new file?"]
-];
+const questions = [
+    {
+    question: "What does HTML stand for?",
+    answers: [
+        { text: "Honey, Tea, Mango, Lime", correct: false },
+        { text: "Hyper Text Markup Language", correct: true },
+        { text: "Head To My Limo", correct: false},
+        { text: "How To Make Labels", correct: false}
+    ]
+},
+    {
+    question: "What does HTML do?",
+    answers: [
+        { text: "Gives you step by step instruction on how to make a lemonade", correct: false},
+        { text: "It tells the browser how to display content", correct: true},
+        { text: "When added to your social media, it gives you more likes.", correct: false},
+        { text:  "It prints labels", correct: false}
+    ]
+},
+    {
+    question: "Which one of these Elements is NOT HTML semantics elements?",
+    answers: [
+        { text: "'main' element", correct: false},
+        { text: "'footer' element", correct: false},
+        { text: "'nav' element", correct: false},
+        { text: "'span' element", correct: true}
+    ]
+},
+    {
+    question: "What does CSS stand for?",
+    answers: [
+        {text: "Camaro Super Sport", correct: false},
+        {text: "Cool Spies Spying", correct: false},
+        {text: "Cascading Style Sheets", correct: true},
+        {text:"Cream, Soup, Salad", correct: false}
+    ]
+},
+    {
+    question: "What does CSS do?",
+    answers: [
+        {text: "It runs complicated algorithms to complete math in a calculator", correct: false},
+        {text: "It describes how HTML elements are displayed", correct: true},
+        {text: "It shows you a new way to do spying", correct: false},
+        {text: "It's a new diet to lose weight", correct: false}
+    ]
+},
 
-var answerChoices = [
-    ["Honey, Tea, Mango, Lime", "Hyper Text Markup Language", "Head To My Limo", "How To Make Labels"]
-    ["Gives you step by step instruction on how to make a lemonade", "It tells the browser how to display content", "When added to your social media, it gives you more likes.", "It prints labels" ],
-    ["'main' element", "'span' element", "'footer' element", "'nav' element"],
-    ["Camaro Super Sport", "Cascading Style Sheets", "Cool Spies Spying", "Cream, Soup, Salad"],
-    ["It runs complicated algorithms to complete math in a calculator", "It describes how HTML elemtns are displayed", "It's a new diet to lose weight", "It shows you a new way to do spying"],
-    ["It's an app to custom order a coffee", "It's a programming language of the web, one of the most popular", "It's a script for a movie about coffee", "It's a language you have to learn in order to speak computer"],
-    ["It's a show that you have to watch in order to learn JavaScript", "It's a block of code designed to perform a particular task", "It's a way to trick your body into functioning a certain way", "It is a comment that explains something but doesn't get executed"],
-    ["newfolder", "mkdir", "newdirectory", "pull"],
-    ["newfile", "touch", "mkfile", "push"]
+    {
+    question: "What is JavaScript?",
+    answers: [
+        {text: "It's an app to custom order a coffee", correct: false},
+        {text: "It's a script for a movie about coffee", correct: false},
+        {text: "It's a language you have to learn in order to speak barista", correct: false},
+        {text: "It's a programming language of the web, one of the most popular", correct: true}
+    ]
+},
+    {
+    question: "What is a function in JavaScript?",
+    answers: [
+        {text: "It's a show that you have to watch in order to learn JavaScript", correct: false},
+        {text: "It is a comment that explains something but doesn't get executed", correct: false},
+        {text: "It's a block of code designed to perform a particular task on command", correct: true},
+        {text: "It's a way to trick your body into functioning a certain way", correct: false}
+    ]
+},
+    {
+    question: "What is the command in gitbash to create a new directory?",
+    answers: [
+        {text: "mkdir", correct: true},
+        {text: "newfolder", correct: false},
+        {text: "pull", correct: false},
+        {text: "newdirectory", correct: false}
+    ]
+},
+    {
+    question: "What is the command in gitbash to create a new file?",
+    answers: [
+        {text: "newfile", correct: false},
+        {text: "touch", correct: true},
+        {text: "push", correct: false},
+        {text: "mkfile", correct: false}
+    ]
+}
 ]
 
-init();
+    // [, , , ],
 
-function init() {
-    var startEl = document.createElement("h1");
-    startEl.textContent = "Click button to start quiz.";
-    var startBtn = document.createElement("button");
-    startBtn.textContent = "Start!";
-    startBtn.addEventListener("click", startGame);
-    startBtn.classList.add("start-btn");
-    mainContainer.append(startEl);
-    mainContainer.append(startBtn);
-}
+
+startButton.addEventListener("click", startGame)
+nextButton.addEventListener("click", () => {
+    currentQuestionIndex++;
+    getNewQuestion()
+} )
 
 function startGame() {
-    gameOn = true;
-    currentScore = 0;
-    timeLeft = 60;
-    questionChoice = 0;
-    timeEl.textContent = "Time: " + timeLeft;
+    console.log("started");
+    startButton.classList.add("hide")
+    shuffledQuestions = questions.sort(() => Math.random() - .5)
+    currentQuestionIndex = 0;
+    questionContainerEl.classList.remove("hide")
+    getNewQuestion();
+    timeEl.classList.remove("hide");
+    greeterEl.classList.add("hide");
     startTimer();
-    getNewQuestion(); 
+    // startTimer();
+    // getNewQuestion(); 
 }
 
 function noTimeLeft() {
@@ -82,48 +144,70 @@ function startTimer() {
         timeLeft--;
         timeEl.textContent = timeLeft + ' seconds until the end of the quiz.';
 
-        if (timeLeft === 0 || gameOn === false) {
+        if (timeLeft === 0) {
             clearInterval(timerInterval);
             noTimeLeft();
         }
     }, 1000);
 };
 
-console.log(questionsList);
-
-function getNewQuestion(num) {
-    var whichQuestion = questionsList[0];
-    var correctChoice = questionsList[1];
-    var answerList = answerChoices;
-    var questionEl = document.createElement("h1");
-    var possibleAnswers = document.createElement("ul");
-
-    questionEl.textContent = whichQuestion;
-    mainContainer.append = questionEl;
-
-    for (i = 0; i < answerList.length; i++) {
-        var answerBtn = document.createElement("button");
-        var answerItem = document.createElement("li");
-        answerBtn.textContent = (i + 1) + ". " + answerChoices[num][i];
-        answerBtn.setAttribute("id", "btn" + i);
-        if (i === correctChoice) {
-            answerBtn.setAttribute('data-correct', "true");
-        } else {
-            answerBtn.setAttribute("data-correct", "false")
-        }
-        answerBtn.addEventListener("click", isCorrect);
-        answerItem.append(answerBtn);
-        possibleAnswers.append(answerItem);
-    }
-    mainContainer.append(possibleAnswers);
+function getNewQuestion() {
+    resetNew()
+    showQuestion(shuffledQuestions[currentQuestionIndex])
 }
 
-function gameMode() {
-    if (questionChoice < questions.length) {
-        mainContainer.innerHTML = "";
-        getNewQuestion(questionChoice);
-        questionChoice++;
+function showQuestion(question) {
+    answerButtonEl.classList.remove("hide");
+    questionEl.innerText = question.question;
+    question.answers.forEach(answer => {
+        const button = document.createElement("button")
+        button.innerText = answer.text;
+        button.classList.add("btn")
+        if (answer.correct) {
+            button.dataset.correct = answer.correct
+        }
+        button.addEventListener("click", checkAnswer)
+        answerButtonEl.append(button);
+    } )
+}
+
+function setStatusClass(element, correct) {
+    clearStatusClass(element) 
+    if (correct) {
+        element.classList.add("correct")
     } else {
-        gameOver();
+        element.classList.add("wrong")
+    }
+}
+
+function clearStatusClass(element) {
+    element.classList.remove("correct")
+    element.classList.remove("wrong")
+}
+
+function checkAnswer(e) {
+    const answerSelected = e.target
+    const correct = answerSelected.dataset.correct
+    setStatusClass(document.body, correct)
+    Array.from(answerButtonEl.children).forEach(button => {
+        setStatusClass(button, button.dataset.correct)
+    })
+    if (shuffledQuestions.length > currentQuestionIndex + 1) {
+        nextButton.classList.remove("hide")
+    } else {
+        resultsButton.classList.remove("hide")
+        startButton.innerText = "Restart"
+        startButton.classList.remove("hide")
+    }
+
+}
+
+function resetNew() {
+    clearStatusClass(document.body)
+    resultsButton.classList.add("hide")
+    nextButton.classList.add("hide")
+    while (answerButtonEl.firstChild) {
+        answerButtonEl.removeChild (answerButtonEl.firstChild)
+
     }
 }
