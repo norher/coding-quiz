@@ -10,17 +10,24 @@
 <body>
     <main>
         <div id="mainCard">
-            <div id="questionContainer" class="hide"></div>
-            <div class="answersContainer">
-                <button>Answer 1</button>
-                <button>Answer 2</button>
-                <button>Answer 3</button>
-                <button>Answer 4</button>
+            <div id="questionContainer" class="hide">Question</div>
+            <div id="answerBtns" class="answersContainer hide">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
             </div>
-            <div>
+            <div class="controls">
                 <button id="startBtn" class="startBtn btn">Start</button>
                 <button id="nextBtn" class="nextBtn btn hide">Next</button>
+                <button id="resultsBtn" class="resultsBtn btn hide ">Results</button>
             </div>
+        </div>
+        <div id="greeting">
+            <h1>Click Start to test your coding knowledge</h1>
+        </div>
+        <div id="timer" class="hide">
+
         </div>
         <script src="./assets/script.js"></script>
     </main>

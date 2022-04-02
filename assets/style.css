@@ -43,11 +43,50 @@ header {
 }
 
 #mainCard {
+    width: 800px;
     max-width: 80%;
     background-color: lightslategray;
     border-radius: 5px;
     padding: 10px;
     box-shadow: 0 0 10px 2px;
+}
+
+.answersContainer {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.btn {
+    background-color: var(--light);
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+.btn:hover {
+    border-color: #000000;
+}
+
+.btn.correct {
+    background-color: var(--correct);
+}
+
+.btn.wrong {
+    background-color: var(--wrong);
+    color: var(--light);
+}
+
+.startBtn, .nextBtn, .resultsBtn {
+    font-size: 1.5rem;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hide {
