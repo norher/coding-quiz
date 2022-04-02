@@ -202,10 +202,6 @@ function checkAnswer(event) {
     } else {
         gameOver();
     }
-    if (correct == true) {
-        score+= 10;
-    }
-    console.log(correct);
     console.log(score);
 }
 
