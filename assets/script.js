@@ -21,10 +21,13 @@ const greeterEl = document.getElementById("greeting")
 const answerButtonEl = document.getElementById("answerBtns");
 const nextButton = document.getElementById("nextBtn");
 const resultsButton = document.getElementById("resultsBtn");
-const scoreEl = document.getElementById("scorer")
-var timeEl = document.getElementById("timer");
-var timeLeft = 60;
-let score = 0;
+const scoreEl = document.getElementById("scorer");
+const timeEl = document.getElementById("timer");
+const timeContainerEl = document.getElementById("timeContainer");
+const enterScoreEl = document.getElementById("enterScore");
+const resultsEl = document.getElementById("results");
+var timeLeft;
+let score;
 let shuffledQuestions, currentQuestionIndex
 
 const questions = [
@@ -112,38 +115,39 @@ const questions = [
 }
 ]
 
-    // [, , , ],
-
-
 startButton.addEventListener("click", startGame)
 nextButton.addEventListener("click", () => {
     currentQuestionIndex++;
     getNewQuestion()
 } )
+resultsButton.addEventListener("click", showResults)
 
 function startGame() {
+    timeLeft = 60;
+    score = 0;
     console.log("started");
-    startButton.classList.add("hide")
-    shuffledQuestions = questions.sort(() => Math.random() - .5)
+    startButton.classList.add("hide");
+    shuffledQuestions = questions.sort(() => Math.random() - .5);
     currentQuestionIndex = 0;
-    questionContainerEl.classList.remove("hide")
-    getNewQuestion();
-    timeEl.classList.remove("hide");
+    questionContainerEl.classList.remove("hide");
+    timeContainerEl.classList.remove("hide");
     greeterEl.classList.add("hide");
+    scoreEl.classList.remove("hide");
     startTimer();
-    // startTimer();
-    // getNewQuestion(); 
+    getNewQuestion(); 
 }
 
 function noTimeLeft() {
-    timeEl.textContent = "You Lost, haha";
+    timeEl.textContent = "Time is up!";
+    questionEl.classList.add("hide");
+    answerButtonEl.classList.add("hide");
+    resultsButton.classList.remove("hide");
 }
 
 function startTimer() {
     var timerInterval = setInterval(function() {
         timeLeft--;
         timeEl.textContent = timeLeft + ' seconds until the end of the quiz.';
-
         if (timeLeft === 0) {
             clearInterval(timerInterval);
             noTimeLeft();
@@ -185,8 +189,9 @@ function clearStatusClass(element) {
     element.classList.remove("wrong")
 }
 
-function checkAnswer(e) {
-    const answerSelected = e.target
+function checkAnswer(event) {
+    event.preventDefault();
+    const answerSelected = event.target
     const correct = answerSelected.dataset.correct
     setStatusClass(document.body, correct)
     Array.from(answerButtonEl.children).forEach(button => {
@@ -195,10 +200,40 @@ function checkAnswer(e) {
     if (shuffledQuestions.length > currentQuestionIndex + 1) {
         nextButton.classList.remove("hide")
     } else {
-        resultsButton.classList.remove("hide")
-        startButton.innerText = "Restart"
-        startButton.classList.remove("hide")
+        gameOver();
     }
+    if (correct == true) {
+        score+= 10;
+    }
+    console.log(correct);
+    console.log(score);
+}
+
+function gameOver() {
+    resultsButton.classList.remove("hide");
+    startButton.innerText = "Restart";
+    startButton.classList.remove("hide");
+    timeEl.innerHTML = " ";
+    enterScore();
+}
+
+function enterScore() {
+    var inputEl = document.createElement("input");
+    var submitBtn = document.createElement("input");
+    var promptDiv = document.createElement("div");
+    submitBtn.addEventListener("click", submitEvent);
+    inputEl.setAttribute("type", "text");
+    inputEl.setAttribute("id", "player-id");
+    submitBtn.setAttribute("type", "submit");
+    promptDiv.innerHTML = "<p>Type your initials to save your score</p>";
+    scoreEl.append(promptDiv);
+    scoreEl.append(inputEl);
+    scoreEl.append(submitBtn);
+}
+
+function showResults() {
+    
+    resultsEl.classList.remove("hide");
 
 }
 

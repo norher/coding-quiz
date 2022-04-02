@@ -62,6 +62,7 @@ header {
     background-color: var(--light);
     border-radius: 5px;
     padding: 5px 10px;
+    font-weight: bold;
 }
 
 .btn:hover {
@@ -89,12 +90,14 @@ header {
     align-items: center;
 }
 
-.darkCard {
-    background-color: black;
-    color: white;
-    justify-content: center;
+#scorer, #timer {
+    max-width: 80%;
+    background-color: lightslategray;
+    border-radius: 5px;
+    padding: 10px;
+    box-shadow: 0 0 10px 2px;
+    margin-top: 20px;
     text-align: center;
-    margin-top: 10px;
 }
 
 .hide {
